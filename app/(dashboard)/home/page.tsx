@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import Greeting from "@/components/Greeting";
 import GreetingsSkeleton from "@/components/GreetingsSkeleton";
 import ProjectCard from "@/components/ProjectCard";
+import TasksCard from "@/components/TasksCard";
 // lib
 import { delay } from "@/lib/async";
 import { getUserFromCookie } from "@/lib/auth";
@@ -53,7 +54,10 @@ const Page = async () => {
           <div className="w-1/3 p-3">{/* new project here */}</div>
         </div>
         <div className="w-full flex flex-2 grow mt-6">
-          <div className="w-full">{/* tasks here */}</div>
+          <div className="w-full mt-6 mb-2">
+            {/* @ts-expect-error Server Component */}
+            <TasksCard title="Learning Task" />
+          </div>
         </div>
       </div>
     </div>
