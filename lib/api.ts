@@ -44,3 +44,12 @@ export function signIn(user: User) {
 export function register(user: User) {
   return fetcher({ url: "register", method: "POST", body: user });
 }
+
+export function createNewProject(name: string) {
+  return fetcher({
+    url: "project",
+    method: "POST",
+    body: { name },
+    json: true,
+  });
+}

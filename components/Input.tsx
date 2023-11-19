@@ -1,8 +1,8 @@
-import { DetailedHTMLProps, InputHTMLAttributes, HTMLProps } from "react";
 import clsx from "clsx";
+import { DetailedHTMLProps, HTMLProps, InputHTMLAttributes } from "react";
 
 type IProps = {
-  className: HTMLProps<HTMLElement>["className"];
+  className?: HTMLProps<HTMLElement>["className"];
 };
 
 type Props = IProps &

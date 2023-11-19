@@ -35,7 +35,7 @@ const ProjectCard: FC<{ project: ProjectWithTask }> = ({ project }) => {
         {formatDate(project.createdAt)}
       </span>
       <div className="mb-6">
-        <span className="text-3xl text-gray-600">{project.tasks.length}</span>
+        <span className="text-3xl text-gray-600">{project.name}</span>
       </div>
       <div className="text-gray-400">
         {completedCount}/{project.tasks.length} completed
