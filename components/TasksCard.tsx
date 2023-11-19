@@ -9,7 +9,7 @@ import Card from "./Card";
 
 type Props = {
   tasks?: Task[];
-  title: string;
+  title?: string;
 };
 
 async function getTasks() {

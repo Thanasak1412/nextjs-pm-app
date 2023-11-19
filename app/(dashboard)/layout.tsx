@@ -23,6 +23,7 @@ const DashboardRootLayout = ({ children }: { children: ReactNode }) => {
             <main className="w-full h-full basis-full">{children}</main>
           </GlassPane>
         </div>
+        <div id="modal" />
       </body>
     </html>
   );
