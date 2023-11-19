@@ -32,7 +32,7 @@ const links: Links = [
 
 export default function Sidebar() {
   return (
-    <Card className="h-full flex justify-between items-center basis-40 flex-wrap">
+    <Card className="h-full flex flex-col justify-center items-center basis-40 flex-wrap gap-28">
       {links.map((link) => (
         <SidebarLink link={link} key={link.label} />
       ))}
