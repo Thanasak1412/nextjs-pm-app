@@ -1,8 +1,10 @@
+import type { NextApiResponse } from "next";
+import { serialize } from "cookie";
 import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcrypt";
 import { RequestCookies } from "next/dist/server/web/spec-extension/cookies";
 // types
-import { User } from ".prisma/client";
+import type { User } from ".prisma/client";
 // config
 import { COOKIE_NAME, JWT_SECRET, SALT_ROUND } from "../config";
 import { db } from "./db";
@@ -20,8 +22,8 @@ export function comparePassword(
   return bcrypt.compareSync(plainTextPassword, hashedPassword);
 }
 
-export function signJWT(user: User) {
-  const iat = Math.floor(Date.now() * 1000);
+export function signJWT(user: Pick<User, "id" | "email">) {
+  const iat = Math.floor(Date.now() / 1000);
   const exp = iat * 60 * 60 * 24 * 7;
 
   return new SignJWT({
@@ -67,4 +69,15 @@ export async function getUserFromCookie(cookies: RequestCookies) {
   });
 
   return user;
+}
+
+export function setJWTCookie(res: NextApiResponse, jwt: string) {
+  res.setHeader(
+    "Set-Cookie",
+    serialize(COOKIE_NAME, jwt, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    })
+  );
 }
