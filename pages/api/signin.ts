@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { comparePassword, setJWTCookie, signJWT } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { signJWT, comparePassword, setJWTCookie } from "@/lib/auth";
-import { User } from ".prisma/client";
+import { User } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,6 +27,8 @@ export default async function handler(
         status: false,
         message: "User not found",
       });
+
+      return;
     }
 
     const hasUser = comparePassword(password, user?.password as string);
@@ -36,6 +38,8 @@ export default async function handler(
         status: false,
         message: "Password is incorrect",
       });
+
+      return;
     }
 
     const jwt = await signJWT(user as Pick<User, "id" | "email">);

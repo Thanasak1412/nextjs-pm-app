@@ -1,14 +1,16 @@
 import type { NextApiResponse } from "next";
-import { serialize } from "cookie";
-import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcrypt";
+import { serialize } from "cookie";
+import { jwtVerify, SignJWT } from "jose";
+import { ReadonlyRequestCookies } from "next/dist/server/app-render";
 import { RequestCookies } from "next/dist/server/web/spec-extension/cookies";
-// types
-import type { User } from ".prisma/client";
+
 // config
 import { COOKIE_NAME, JWT_SECRET, SALT_ROUND } from "../config";
 import { db } from "./db";
 
+// types
+import type { User } from ".prisma/client";
 export function hashPassword(password: string) {
   const salt = bcrypt.genSaltSync(+SALT_ROUND);
 
@@ -53,7 +55,9 @@ export async function verifyJWT(jwt: string) {
   return payload.payload as Payload;
 }
 
-export async function getUserFromCookie(cookies: RequestCookies) {
+export async function getUserFromCookie(
+  cookies: RequestCookies | ReadonlyRequestCookies
+) {
   const jwt = cookies.get(COOKIE_NAME)?.value;
 
   if (!jwt) {
